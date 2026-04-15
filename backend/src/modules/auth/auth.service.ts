@@ -2,7 +2,8 @@ import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { PrismaService } from "../prisma/prisma.service";
 import { compare } from "bcrypt";
-import jwt from "jsonwebtoken";
+import * as jwt from "jsonwebtoken";
+import type { SignOptions } from "jsonwebtoken";
 import { AuthUser } from "./auth.types";
 
 @Injectable()
@@ -41,8 +42,10 @@ export class AuthService {
     const jwtRefreshSecret = this.config.get<string>("JWT_REFRESH_SECRET") ?? "change-me-too";
     const jwtRefreshExpiresIn = this.config.get<string>("JWT_REFRESH_EXPIRES_IN") ?? "7d";
 
-    const accessToken = jwt.sign(payload, jwtSecret, { expiresIn: jwtExpiresIn });
-    const refreshToken = jwt.sign(payload, jwtRefreshSecret, { expiresIn: jwtRefreshExpiresIn });
+    const accessOpts: SignOptions = { expiresIn: jwtExpiresIn as SignOptions["expiresIn"] };
+    const refreshOpts: SignOptions = { expiresIn: jwtRefreshExpiresIn as SignOptions["expiresIn"] };
+    const accessToken = jwt.sign(payload, jwtSecret, accessOpts);
+    const refreshToken = jwt.sign(payload, jwtRefreshSecret, refreshOpts);
 
     return {
       user: { id: user.id, name: user.name, email: user.email, tenantId: user.tenantId, permissions },
