@@ -3,6 +3,13 @@
   (Leia em ordem. Não precisa entender programação.)
 ================================================================================
 
+  Se você usou o arquivo AJUDA-NUVEM-SIMPLES.bat:
+  • Primeiro abre só esta janela de texto (grande).
+  • O navegador SÓ abre quando você voltar na janela preta e apertar ENTER.
+  Assim dá para ler com calma.
+
+================================================================================
+
 IMAGEM RÁPIDA — O QUE SÃO AS PARTES
 ------------------------------------
   • GITHUB     = Onde fica o "pacote" do programa (você já tem: consignado-novo).
