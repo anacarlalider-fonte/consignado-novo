@@ -22,4 +22,7 @@ async function bootstrap() {
   console.log(`RealSynk Consignado API → http://localhost:${port}/api (rede: use o IP deste PC na porta ${port})`);
 }
 
-bootstrap();
+bootstrap().catch((err) => {
+  console.error("Falha ao subir a API:", err);
+  process.exit(1);
+});

@@ -1,0 +1,2 @@
+# Scripts shell no Docker precisam de fim de linha LF (senão: /bin/sh^M: bad interpreter)
+*.sh text eol=lf

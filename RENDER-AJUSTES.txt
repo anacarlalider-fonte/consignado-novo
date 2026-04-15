@@ -24,9 +24,9 @@ OPÇÃO B — Node nativo (recomendado se puder mudar)
    npm run start
 5. Salvar → Implantação manual
 
-VARIÁVEIS (Environment) — conferir no mesmo serviço
+VARIÁVEIS (Environment) — conferir no MESMO serviço WEB (consignado-novo), NÃO só no Postgres
 -----------------
-DATABASE_URL     = URL interna do Postgres (botão Conectar no banco)
+DATABASE_URL     = URL interna do Postgres (botão Conectar no banco) — sem isso o container morre com status 1
 JWT_SECRET       = texto longo aleatório
 JWT_REFRESH_SECRET = outro texto longo
 CORS_ORIGINS     = https://SEU-SITE.vercel.app  (URL exata do front)
