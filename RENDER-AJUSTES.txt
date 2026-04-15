@@ -7,11 +7,12 @@ URL: https://consignado-novo.onrender.com
 
 OPÇÃO A — Docker (se o Render já está como Docker)
 -----------------
-1. Settings → Build e implantar (ou equivalente)
-2. Root Directory:  backend
-3. Dockerfile Path:  Dockerfile
-   (fica dentro da pasta backend no GitHub)
-4. Salvar → Implantação manual → implantar último commit
+O Dockerfile na RAIZ do GitHub ja aponta para a pasta backend/.
+1. Root Directory:  deixe VAZIO ou "." (raiz do repositorio)
+2. Dockerfile Path:  Dockerfile  (na raiz)
+3. Salvar → Implantação manual → implantar último commit
+
+(Se preferir pasta backend: Root Directory = backend e Dockerfile = Dockerfile la dentro.)
 
 OPÇÃO B — Node nativo (recomendado se puder mudar)
 -----------------
