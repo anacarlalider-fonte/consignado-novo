@@ -1,0 +1,46 @@
+================================================================================
+  LIGAR A VERCEL AO REPOSITORIO CERTO (consignado-novo)
+  Eu nao tenho acesso a sua senha da Vercel — siga so estes passos.
+================================================================================
+
+OBJETIVO
+--------
+O projeto "dist" (ou outro) esta ligado ao Git ERRADO (sempre-real-crm).
+As mudancas estao no GitHub: anacarlalider-fonte/consignado-novo
+Voce vai CONECTAR esse repo na Vercel.
+
+
+OPCAO A — Trocar o Git do projeto "dist"
+----------------------------------------
+1. Abra: https://vercel.com/dashboard
+2. Clique no projeto **dist** (ou o que voce quer reutilizar).
+3. Menu: **Settings** (Configuracoes)
+4. Esquerda: **Git**
+5. Em **Connected Git Repository**, clique **Disconnect** e confirme.
+6. Clique **Connect Git Repository**
+7. Escolha **GitHub** → repo **consignado-novo** (anacarlalider-fonte/consignado-novo)
+8. Branch: **principal** (ou main, a que voce usa no GitHub)
+9. **IMPORTANTE:** em **Root Directory**, clique **Edit** e coloque:  frontend
+   (sem barra, minusculo, pasta que existe no GitHub)
+10. **Environment Variables** (Production):
+    VITE_API_BASE_URL = https://consignado-novo.onrender.com
+    VITE_AUTH_ENABLED = true
+11. Salve. Va em **Deployments** → **Redeploy** no ultimo commit (ou espere o deploy automatico).
+
+
+OPCAO B — Projeto novo (se preferir nao mexer no dist)
+------------------------------------------------------
+1. Dashboard → **Add New** → **Project**
+2. **Import** → **consignado-novo**
+3. Root Directory: **frontend**
+4. Mesmas variaveis do passo 10 acima
+5. **Deploy**
+6. O link novo aparece no fim (tipo xxx.vercel.app) — use esse no GitHub About e no CORS do Render.
+
+
+DEPOIS
+------
+- Render (API) → CORS_ORIGINS = https://SEU-SITE.vercel.app (sem barra no fim)
+- GitHub → About → Website = mesmo link do passo Visit na Vercel
+
+================================================================================
