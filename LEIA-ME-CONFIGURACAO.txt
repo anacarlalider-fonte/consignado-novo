@@ -19,3 +19,14 @@ RealSynk Consignado - Como continuar a configuracao
 
    Login: admin@kato.com
    Senha: Admin@123
+
+---
+Hospedar na internet (Vercel + Render) — dados no PostgreSQL
+------------------------------------------------------------
+1) De dois cliques em: PUBLICAR-NUVEM.bat
+   (cria Git se precisar, gera JWT para o Render e mostra os comandos.)
+
+2) Crie um repositorio vazio no GitHub e faca o push (comandos aparecem no script).
+
+3) Siga o arquivo DEPLOY.md para conectar Render e Vercel ao mesmo GitHub.
+   Ninguem pode logar na sua conta Vercel/Render por voce — isso e so no navegador.
