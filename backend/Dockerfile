@@ -9,6 +9,7 @@ COPY package*.json ./
 COPY prisma ./prisma/
 
 RUN npm ci
+ENV DATABASE_URL="postgresql://build:build@127.0.0.1:5432/build?schema=public"
 RUN npx prisma generate
 
 COPY . .

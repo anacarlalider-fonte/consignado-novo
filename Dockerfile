@@ -10,6 +10,8 @@ COPY backend/package*.json ./
 COPY backend/prisma ./prisma/
 
 RUN npm ci
+# Prisma valida o schema no build e exige a variável existir (Render só injeta no runtime)
+ENV DATABASE_URL="postgresql://build:build@127.0.0.1:5432/build?schema=public"
 RUN npx prisma generate
 
 COPY backend/ ./
