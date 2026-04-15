@@ -1,0 +1,85 @@
+================================================================================
+  SE VOCE NAO ENTENDE NADA DE TECNOLOGIA — FACA SO ISTO (NA ORDEM)
+  Nao precisa saber o que significa. So clicar e colar.
+================================================================================
+
+IMPORTANTE
+----------
+Eu (assistente no computador) NAO tenho sua senha do Render.
+Por isso NAO consigo "configurar por voce" dentro do site.
+Mas o programa JA ESTA PRONTO no GitHub. Falta SO isto abaixo.
+
+
+PARTE A — PEGAR A "CHAVE" DO BANCO (30 segundos)
+------------------------------------------------
+1. Abra: https://dashboard.render.com
+2. Entre na sua conta.
+3. Clique no banco de dados que se chama algo como: consignado
+4. Procure um botao: Conectar  ou  Connect
+5. Copie o texto que diz "Internal Database URL" ou "URL interna"
+   (comeca com postgresql:// ... )
+6. DEIXE essa copia no CTRL+C — voce vai colar na Parte B.
+
+
+PARTE B — COLOCAR AS VARIAVEIS NO SERVICO DA API (5 minutos)
+-------------------------------------------------------------
+1. No Render, volte para a lista de servicos.
+2. Clique no servico: consignado-novo  (e o site da internet, NAO o banco)
+3. No menu da ESQUERDA, clique: Environment  ou  Ambiente
+4. Voce vai ver linhas "nome" e "valor".
+
+   Preencha EXATAMENTE estes nomes (um por linha; use "+ Add" se precisar):
+
+   Nome: DATABASE_URL
+   Valor: COLE aqui o que voce copiou na Parte A (postgresql://...)
+
+   Nome: JWT_SECRET
+   Valor: clique no botao "Generate" ao lado do campo (ou invente um monte de letras)
+
+   Nome: JWT_REFRESH_SECRET
+   Valor: clique Generate de novo (tem que ser diferente do anterior)
+
+   Nome: CORS_ORIGINS
+   Valor: https://project-consignado.vercel.app
+          (se o seu site na Vercel tiver OUTRO endereco, troque SO esta parte
+           — tem que ser igual ao que aparece na barra do navegador no site)
+
+   Nome: NODE_ENV
+   Valor: production
+
+5. Role a pagina ate o fim.
+6. Clique no botao grande: Save  /  Salvar  /  Deploy Web Service
+7. ESPERE 10 a 15 minutos (pode ficar amarelo "building" — normal).
+
+
+PARTE C — TESTAR SE DEU CERTO
+-----------------------------
+1. Abra no navegador:
+   https://consignado-novo.onrender.com/api/health
+
+2. Se aparecer "waking up" / "acordando": espere 1 minuto e aperte F5 varias vezes.
+
+3. Quando der CERTO, aparece um texto com "ok" dentro (tipo JSON).
+
+4. Ainda no Render, no menu ESQUERDO do consignado-novo, clique: Shell
+   Digite exatamente (e Enter):
+   npx prisma db seed
+   Espere terminar.
+   Isso cria login: admin@kato.com  senha: Admin@123
+
+
+SE AINDA DER "Failed" / VERMELHO
+---------------------------------
+Chame QUALQUER pessoa que saiba usar computador ao seu lado por 15 minutos
+e mostre ESTE arquivo. Ela so precisa seguir Parte A + B + C.
+
+Ou mande para alguem de TI da empresa com a frase:
+"O codigo ja esta no GitHub; falta so configurar Environment no Render."
+
+
+NAO DESISTA SE FOR SO ISSO
+--------------------------
+E literalmente: copiar URL do banco + colar 5 nomes + esperar o deploy.
+Voce ja chegou ate o Render; falta um passo de formulario.
+
+================================================================================
