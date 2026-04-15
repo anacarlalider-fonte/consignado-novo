@@ -7,6 +7,8 @@
 
 **Ninguém pode logar na sua conta Vercel/Render por você** — falta só: criar repo no GitHub, conectar nos painéis e colar as variáveis (uns 10–15 minutos).
 
+**Checklist passo a passo (ordem certa):** abra **`CONFIGURACAO-NUVEM-CHECKLIST.md`** na raiz do projeto.
+
 ---
 
 O **frontend** (Vite) fica na **Vercel**. A **API NestJS** e o **PostgreSQL** precisam de um serviço que rode Node de forma contínua — o modelo usual é **Render**, **Railway** ou **Fly.io**. Os dados da empresa ficam no **banco**; publicar uma nova versão do site **não apaga** o que está no PostgreSQL.

@@ -28,5 +28,7 @@ Hospedar na internet (Vercel + Render) — dados no PostgreSQL
 
 2) Crie um repositorio vazio no GitHub e faca o push (comandos aparecem no script).
 
-3) Siga o arquivo DEPLOY.md para conectar Render e Vercel ao mesmo GitHub.
+3) Abra na pasta do projeto: CONFIGURACAO-NUVEM-CHECKLIST.md
+   (ordem certa: Render/API primeiro, depois Vercel, depois CORS.)
+   Detalhes extras: DEPLOY.md
    Ninguem pode logar na sua conta Vercel/Render por voce — isso e so no navegador.

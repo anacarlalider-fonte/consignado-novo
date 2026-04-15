@@ -6,7 +6,11 @@ const AUTH_TOKEN_KEY = "crm_kato_access_token";
  */
 export function getApiBaseUrl(): string {
   const fromEnv = import.meta.env.VITE_API_BASE_URL?.trim();
-  if (fromEnv) return fromEnv.replace(/\/$/, "");
+  if (fromEnv) {
+    let base = fromEnv.replace(/\/$/, "");
+    if (!base.endsWith("/api")) base = `${base}/api`;
+    return base;
+  }
   if (typeof window !== "undefined" && window.location?.hostname) {
     const { protocol, hostname } = window.location;
     return `${protocol}//${hostname}:3001/api`;
