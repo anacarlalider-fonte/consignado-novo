@@ -1,6 +1,11 @@
 RealSynk Consignado - Como continuar a configuracao
 =========================================
 
+NAO ENTENDO NADA DE INTERNET / NUVEM?
+  De dois cliques em:  AJUDA-NUVEM-SIMPLES.bat
+  E leia:  COMO-COLOCAR-NA-INTERNET.txt  (linguagem bem simples, passo a passo)
+
+
 1) Abra o programa "Docker Desktop" e espere ate ficar estavel (icone da baleia).
 
 2) Na pasta deste projeto, de DOIS CLIQUES no arquivo:

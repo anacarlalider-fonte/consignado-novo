@@ -1,0 +1,161 @@
+================================================================================
+  COLOCAR O CRM NA INTERNET — GUIA BEM SIMPLES
+  (Leia em ordem. Não precisa entender programação.)
+================================================================================
+
+IMAGEM RÁPIDA — O QUE SÃO AS PARTES
+------------------------------------
+  • GITHUB     = Onde fica o "pacote" do programa (você já tem: consignado-novo).
+  • VERCEL     = Onde o SITE abre no navegador (endereço tipo .vercel.app).
+  • RENDER     = Onde ficam o CÉREBRO (API) e o ARQUIVO DOS DADOS (banco).
+
+  Sem o Render, o site na Vercel não consegue salvar login e listas direito.
+  Por isso fazemos o Render ANTES de testar o site de novo.
+
+
+================================================================================
+  PARTE 1 — CONTA NO RENDER (só na primeira vez)
+================================================================================
+
+  1. Abra o site:  https://render.com
+  2. Clique em algo como "Get Started" ou "Sign Up".
+  3. Entre com a MESMA conta do GitHub que você usa no projeto (anacarlalider-fonte).
+  4. Autorize o Render a ver seus repositórios, se pedir.
+
+
+================================================================================
+  PARTE 2 — BANCO DE DADOS (PostgreSQL) NO RENDER
+================================================================================
+
+  1. No painel do Render, clique em algo como "New" ou "+" (novo).
+  2. Escolha "PostgreSQL" (banco de dados).
+  3. Dê um nome qualquer (ex: crm-dados).
+  4. Plano grátis serve para começar.
+  5. Clique em Create / Criar e espere ficar verde / pronto.
+  6. ABRA esse banco e procure "Internal Database URL" ou "Connection String"
+     ou "PostgreSQL URL" — é um texto longo começando com postgresql://
+  7. COPIE esse texto inteiro. Você vai colar na Parte 3.
+     (Se tiver botão "Copy", use o Copy.)
+
+
+================================================================================
+  PARTE 3 — SERVIÇO WEB DA API (o "cérebro" do CRM)
+================================================================================
+
+  1. De novo "New" → desta vez "Web Service" (serviço web).
+
+  2. Conecte o repositório: consignado-novo (o mesmo do GitHub).
+
+  3. Preencha assim (copie exatamente estes nomes):
+
+     Nome: o que quiser (ex: crm-api)
+
+     Região: qualquer que apareça (ex: Ohio).
+
+     Branch: main  (ou master, se for o que você usa no GitHub)
+
+     Root Directory:  backend
+        (é IMPORTANTE escrever: backend  — sem barra, minúsculo)
+
+     Runtime: Node
+
+     Build Command (cole tudo numa linha):
+       npm install && npx prisma generate && npm run build && npx prisma migrate deploy
+
+     Start Command:
+       npm run start
+
+  4. Plano: Free / Grátis (pode "dormir" depois de um tempo sem uso; é normal).
+
+  5. Role até "Environment Variables" (variáveis de ambiente) e ADICIONE cada linha:
+
+     DATABASE_URL  =  cole aqui o texto longo postgresql:// da Parte 2
+
+     JWT_SECRET  =  invente uma frase bem longa e aleatória (ex: 40 letras misturadas)
+
+     JWT_REFRESH_SECRET  =  OUTRA frase longa diferente da anterior
+
+     NODE_ENV  =  production
+
+     CORS_ORIGINS  =  a URL do seu site na Vercel
+        Exemplo (troque pelo seu):  https://project-consignado.vercel.app
+        Sem barra no final.
+        Se não souber ainda, use a URL que a Vercel mostra em "Domains".
+
+  6. Clique em Create Web Service / Criar e ESPERE o deploy terminar (vários minutos).
+     Se der erro vermelho, anote a última linha do log ou tire print.
+
+  7. Quando estiver "Live" / no ar, no TOPO da página do serviço aparece um endereço
+     tipo:  https://alguma-coisa.onrender.com
+     ANOTE esse endereço. Chame de "URL DA API".
+
+  8. Abra o NAVEGADOR e digite na barra (troque pelo seu endereço):
+        https://SUA-URL-DA-API.onrender.com/api/health
+     Tem que aparecer um texto com "ok" ou status ok. Se aparecer, a API está viva.
+
+  9. Ainda no Render, no MESMO serviço web, procure a aba "Shell" (terminal).
+
+     Digite exatamente e aperte Enter:
+        npx prisma db seed
+
+     Espere terminar. Isso cria o usuário:
+        e-mail: admin@kato.com
+        senha: Admin@123
+
+     (Depois você pode trocar a senha; por enquanto é para testar.)
+
+
+================================================================================
+  PARTE 4 — SITE NA VERCEL (ajustes finos)
+================================================================================
+
+  1. Abra:  https://vercel.com  e entre no projeto project-consignado.
+
+  2. Settings (Configurações) → General:
+     "Root Directory" tem que ser:  frontend
+     Se não for, mude, salve, e faça um novo deploy se pedir.
+
+  3. Settings → Environment Variables:
+     Adicione (ambiente Production):
+
+     Nome: VITE_API_BASE_URL
+     Valor: https://SUA-URL-DA-API.onrender.com
+            (pode ser só até .onrender.com — o sistema completa o /api sozinho)
+
+     Nome: VITE_AUTH_ENABLED
+     Valor: true
+
+  4. Vá em Deployments → nos três pontinhos do último deploy → Redeploy.
+     (Isso obriga o site a "reconstruir" com as variáveis novas.)
+
+  5. Abra o link do site (tipo project-consignado.vercel.app).
+     Deve aparecer a TELA DE LOGIN.
+     Entre com: admin@kato.com  /  Admin@123
+
+
+================================================================================
+  SE ALGO DER ERRADO
+================================================================================
+
+  • Página em branco no site
+      → Na Vercel, Root Directory = frontend ?
+
+  • Login não funciona / erro de rede
+      → Na Vercel, fez Redeploy depois de colocar VITE_API_BASE_URL ?
+      → Na API (Render), CORS_ORIGINS está com a URL EXATA do site (https://...) ?
+
+  • API sempre carregando / 502
+      → Plano grátis do Render: primeiro acesso depois de parado pode demorar 1 minuto.
+
+  • Você pode pedir ajuda a alguém com o computador ao lado mostrando ESTE arquivo
+    e os prints da Vercel e do Render.
+
+
+================================================================================
+  RESUMO EM UMA FRASE
+================================================================================
+  Render = banco + API (com Root Directory "backend" e variáveis).
+  Vercel = site (Root Directory "frontend" + duas variáveis + Redeploy).
+  Depois: login admin@kato.com / Admin@123
+
+================================================================================
