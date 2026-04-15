@@ -45,14 +45,17 @@ async function main() {
     });
   }
 
-  const passwordHash = await hash("Admin@123", 10);
+  const adminEmail = (process.env.SEED_ADMIN_EMAIL?.trim() || "admin@kato.com").toLowerCase();
+  const adminPassword = process.env.SEED_ADMIN_PASSWORD ?? "Admin@123";
+  const adminName = (process.env.SEED_ADMIN_NAME ?? "Administrador").trim() || "Administrador";
+  const passwordHash = await hash(adminPassword, 10);
   const adminUser = await prisma.user.upsert({
-    where: { tenantId_email: { tenantId: tenant.id, email: "admin@kato.com" } },
-    update: { passwordHash, status: "ACTIVE", deletedAt: null, name: "Administrador" },
+    where: { tenantId_email: { tenantId: tenant.id, email: adminEmail } },
+    update: { passwordHash, status: "ACTIVE", deletedAt: null, name: adminName },
     create: {
       tenantId: tenant.id,
-      name: "Administrador",
-      email: "admin@kato.com",
+      name: adminName,
+      email: adminEmail,
       passwordHash,
       status: "ACTIVE"
     }

@@ -137,16 +137,20 @@ export function LoginPage() {
         <div className="login-separator" />
 
         {AUTH_ENABLED ? (
-          <form className="login-form" onSubmit={handleApiLogin} autoComplete="on">
+          <form className="login-form" onSubmit={handleApiLogin} autoComplete="off">
+            {/* Campos falsos reduzem o Chrome preenchendo admin@kato.com de outro site */}
+            <input type="text" name="fake-user" autoComplete="off" tabIndex={-1} className="login-honeypot" aria-hidden="true" />
+            <input type="password" name="fake-pass" autoComplete="off" tabIndex={-1} className="login-honeypot" aria-hidden="true" />
             <label className="login-field">
               <span>E-mail</span>
               <input
                 type="email"
-                name="email"
+                id="realsynk-login-email"
+                name="realsynk-login-email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="seu@email.com"
-                autoComplete="email"
+                autoComplete="off"
                 autoFocus
               />
             </label>
@@ -156,11 +160,12 @@ export function LoginPage() {
               <div className="login-field-password">
                 <input
                   type={showSenha ? "text" : "password"}
-                  name="password"
+                  id="realsynk-login-password"
+                  name="realsynk-login-password"
                   value={senha}
                   onChange={(e) => setSenha(e.target.value)}
                   placeholder="Sua senha"
-                  autoComplete="current-password"
+                  autoComplete="off"
                 />
                 <button
                   type="button"
@@ -182,16 +187,18 @@ export function LoginPage() {
           </form>
         ) : (
           <>
-            <form className="login-form" onSubmit={handleSellerLogin}>
+            <form className="login-form" onSubmit={handleSellerLogin} autoComplete="off">
+              <input type="text" name="fake-user" autoComplete="off" tabIndex={-1} className="login-honeypot" aria-hidden="true" />
               <label className="login-field">
                 <span>Nome</span>
                 <input
                   type="text"
+                  name="realsynk-seller-name"
                   value={nome}
                   onChange={(e) => setNome(e.target.value)}
                   placeholder="Digite seu nome completo"
                   autoFocus
-                  autoComplete="name"
+                  autoComplete="off"
                 />
               </label>
 
@@ -200,10 +207,11 @@ export function LoginPage() {
                 <div className="login-field-password">
                   <input
                     type={showSenha ? "text" : "password"}
+                    name="realsynk-seller-pin"
                     value={senha}
                     onChange={(e) => setSenha(e.target.value)}
                     placeholder="Sua senha de acesso"
-                    autoComplete="current-password"
+                    autoComplete="off"
                   />
                   <button
                     type="button"

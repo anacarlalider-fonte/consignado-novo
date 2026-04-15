@@ -65,7 +65,12 @@ PARTE C — TESTAR SE DEU CERTO
    Digite exatamente (e Enter):
    npx prisma db seed
    Espere terminar.
-   Isso cria login: admin@kato.com  senha: Admin@123
+   Por padrao cria: admin@kato.com / Admin@123
+   Para OUTRO e-mail e senha no primeiro admin, no Environment do servico WEB adicione
+   ANTES do seed (ou rode seed de novo depois):
+   SEED_ADMIN_EMAIL = seu email
+   SEED_ADMIN_PASSWORD = sua senha
+   SEED_ADMIN_NAME = Seu Nome
 
 
 SE AINDA DER "Failed" / VERMELHO

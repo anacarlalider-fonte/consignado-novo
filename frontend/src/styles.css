@@ -956,6 +956,15 @@ button:hover {
 }
 
 /* ═══ Login Page — Premium Design ═══ */
+.login-honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .login-page {
   min-height: 100vh;
   display: grid;
