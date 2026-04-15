@@ -1,12 +1,21 @@
 import "reflect-metadata";
 import { NestFactory } from "@nestjs/core";
-import { RequestMethod, ValidationPipe } from "@nestjs/common";
+import { ValidationPipe } from "@nestjs/common";
+import type { Application, Request, Response } from "express";
 import { AppModule } from "./modules/app.module";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.setGlobalPrefix("api", {
-    exclude: [{ path: "/", method: RequestMethod.GET }]
+  app.setGlobalPrefix("api");
+
+  const server = app.getHttpAdapter().getInstance() as Application;
+  server.get("/", (_req: Request, res: Response) => {
+    res.json({
+      name: "RealSynk Consignado — API",
+      status: "ok",
+      health: "/api/health",
+      hint: "O painel do CRM abre no endereço do site na Vercel (não nesta URL)."
+    });
   });
   const corsOrigins = (process.env.CORS_ORIGINS ?? "")
     .split(",")

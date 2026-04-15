@@ -12,11 +12,10 @@ import { APP_GUARD } from "@nestjs/core";
 import { ReportsController } from "./reports/reports.controller";
 import { IntegrationsController } from "./integrations/integrations.controller";
 import { AutomationController } from "./automation/automation.controller";
-import { RootController } from "./root/root.controller";
 
 @Module({
   imports: [ConfigModule.forRoot({ isGlobal: true })],
-  controllers: [RootController, HealthController, AuthController, CrmController, ReportsController, IntegrationsController, AutomationController],
+  controllers: [HealthController, AuthController, CrmController, ReportsController, IntegrationsController, AutomationController],
   providers: [
     PrismaService,
     CrmService,
