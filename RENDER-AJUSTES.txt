@@ -1,0 +1,42 @@
+================================================================================
+  ÚLTIMOS AJUSTES NO RENDER (depois de SUBIR-GITHUB.bat)
+================================================================================
+
+Seu serviço: consignado-novo
+URL: https://consignado-novo.onrender.com
+
+OPÇÃO A — Docker (se o Render já está como Docker)
+-----------------
+1. Settings → Build e implantar (ou equivalente)
+2. Root Directory:  backend
+3. Dockerfile Path:  Dockerfile
+   (fica dentro da pasta backend no GitHub)
+4. Salvar → Implantação manual → implantar último commit
+
+OPÇÃO B — Node nativo (recomendado se puder mudar)
+-----------------
+1. Settings → Runtime / Ambiente → troque de Docker para Node
+2. Root Directory:  backend
+3. Build Command:
+   npm install && npx prisma generate && npm run build && npx prisma migrate deploy
+4. Start Command:
+   npm run start
+5. Salvar → Implantação manual
+
+VARIÁVEIS (Environment) — conferir no mesmo serviço
+-----------------
+DATABASE_URL     = URL interna do Postgres (botão Conectar no banco)
+JWT_SECRET       = texto longo aleatório
+JWT_REFRESH_SECRET = outro texto longo
+CORS_ORIGINS     = https://SEU-SITE.vercel.app  (URL exata do front)
+NODE_ENV         = production
+
+DEPOIS DO DEPLOY VERDE
+-----------------
+Shell do serviço web (uma vez):
+  npx prisma db seed
+
+Teste no navegador:
+  https://consignado-novo.onrender.com/api/health
+
+================================================================================

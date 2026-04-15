@@ -5,6 +5,10 @@ NAO ENTENDO NADA DE INTERNET / NUVEM?
   De dois cliques em:  AJUDA-NUVEM-SIMPLES.bat
   E leia:  COMO-COLOCAR-NA-INTERNET.txt  (linguagem bem simples, passo a passo)
 
+RENDER DIZ QUE O GITHUB ESTA VAZIO OU O SITE NAO ABRE?
+  De dois cliques em:  SUBIR-GITHUB.bat  (manda o codigo para o GitHub)
+  Depois leia:  RENDER-AJUSTES.txt  (3 linhas para conferir no Render)
+
 
 1) Abra o programa "Docker Desktop" e espere ate ficar estavel (icone da baleia).
 
