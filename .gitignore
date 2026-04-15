@@ -1,0 +1,36 @@
+# Dependências (reinstalar com npm install)
+node_modules/
+**/node_modules/
+
+# Build / cache
+dist/
+**/dist/
+.vite/
+**/.vite/
+*.tsbuildinfo
+
+# Ambiente (não versionar segredos)
+.env
+.env.*
+!.env.example
+!**/.env.example
+backend/.env
+
+# Logs e SO
+*.log
+.DS_Store
+Thumbs.db
+
+# Backups grandes gerados localmente (o histórico fica no Git)
+backups/*.zip
+backups/*.tgz
+backups/*.tar.gz
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Vercel local (recriar com vercel link)
+.vercel/

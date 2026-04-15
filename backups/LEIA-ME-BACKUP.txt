@@ -1,0 +1,21 @@
+BACKUP CRM KATO — como usar
+=============================
+
+Nesta pasta você pode guardar:
+- crm-kato-git-*.bundle  → cópia completa do histórico Git (restaurar em qualquer PC)
+- Cópia na Área de Trabalho CRM-KATO-BACKUP-* → pasta espelho do projeto (sem node_modules)
+
+Restaurar a partir do .bundle
+-----------------------------
+1. mkdir pasta-nova && cd pasta-nova
+2. git clone crm-kato-git-AAAA-MM-DD.bundle .
+3. cd frontend && npm install && npm run build
+4. cd ../backend && npm install (e prisma se usar)
+
+Restaurar a partir da pasta CRM-KATO-BACKUP-*
+--------------------------------------------
+1. Copie a pasta para onde quiser
+2. cd frontend && npm install
+3. cd ../backend && npm install
+
+O código-fonte importante está versionado no Git (commits na raiz do projeto).

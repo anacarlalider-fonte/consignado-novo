@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RealSynk Consignado</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>RealSynk Consignado</h1>
+      <p>Acompanhamento de atendimentos e pedidos em aberto</p>
+    </div>
+    <button id="btnReset" class="danger">Resetar atualizacoes</button>
+  </header>
+
+  <main class="container">
+    <section class="kpis">
+      <article class="card">
+        <h2>Pedidos</h2>
+        <p id="kpiPedidos">0</p>
+      </article>
+      <article class="card">
+        <h2>Valor a faturar</h2>
+        <p id="kpiFaturar">R$ 0,00</p>
+      </article>
+      <article class="card">
+        <h2>Criticos</h2>
+        <p id="kpiCriticos">0</p>
+      </article>
+      <article class="card">
+        <h2>Sem retorno</h2>
+        <p id="kpiSemRetorno">0</p>
+      </article>
+    </section>
+
+    <section class="filters">
+      <input id="fBusca" type="text" placeholder="Buscar por cliente ou pedido">
+      <select id="fVendedor"></select>
+      <select id="fUrgencia">
+        <option value="">Urgencia: todas</option>
+        <option value="CRITICO">Critico</option>
+        <option value="ATENCAO">Atencao</option>
+        <option value="RECENTE">Recente</option>
+      </select>
+      <select id="fEtapa">
+        <option value="">Etapa CRM: todas</option>
+        <option value="Novo">Novo</option>
+        <option value="Contato iniciado">Contato iniciado</option>
+        <option value="Negociacao">Negociacao</option>
+        <option value="Aguardando pagamento">Aguardando pagamento</option>
+        <option value="Concluido">Concluido</option>
+      </select>
+    </section>
+
+    <section class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Pedido</th>
+            <th>Cliente</th>
+            <th>Vendedor</th>
+            <th>A Faturar</th>
+            <th>Dias em Aberto</th>
+            <th>Urgencia</th>
+            <th>Etapa CRM</th>
+            <th>Ultimo contato</th>
+            <th>Proximo follow-up</th>
+            <th>Acao</th>
+          </tr>
+        </thead>
+        <tbody id="tbPedidos"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <dialog id="dlgAtendimento">
+    <form method="dialog" id="frmAtendimento">
+      <h3 id="dlgTitulo"></h3>
+      <label>Etapa CRM
+        <select id="mEtapa">
+          <option>Novo</option>
+          <option>Contato iniciado</option>
+          <option>Negociacao</option>
+          <option>Aguardando pagamento</option>
+          <option>Concluido</option>
+        </select>
+      </label>
+      <label>Ultimo contato
+        <input id="mUltimoContato" type="date">
+      </label>
+      <label>Proximo follow-up
+        <input id="mProximoFollowup" type="date">
+      </label>
+      <label>Observacoes de atendimento
+        <textarea id="mObs" rows="5" placeholder="Descreva o atendimento, objecoes e proxima acao"></textarea>
+      </label>
+      <menu>
+        <button type="button" id="btnCancelar">Cancelar</button>
+        <button type="submit" class="primary">Salvar</button>
+      </menu>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>

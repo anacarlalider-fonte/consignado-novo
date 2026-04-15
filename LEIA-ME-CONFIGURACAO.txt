@@ -1,0 +1,21 @@
+RealSynk Consignado - Como continuar a configuracao
+=========================================
+
+1) Abra o programa "Docker Desktop" e espere ate ficar estavel (icone da baleia).
+
+2) Na pasta deste projeto, de DOIS CLIQUES no arquivo:
+   INICIAR-CRM.bat
+
+3) IMPORTANTE: use o Explorador de Arquivos do Windows para abrir o INICIAR-CRM.bat.
+   O terminal dentro do Cursor (ou de outro editor) as vezes NAO consegue falar com o Docker.
+   Por isso o assistente pode nao conseguir "continuar" a configuracao por voce — no SEU computador o duplo-clique funciona.
+
+4) Se aparecer erro "Docker Desktop is unable to start":
+   - Feche o Docker Desktop e abra de novo
+   - Ou reinicie o Windows e abra o Docker antes de clicar no INICIAR-CRM.bat
+
+5) Quando terminar, abra o navegador em:
+   http://localhost:5173
+
+   Login: admin@kato.com
+   Senha: Admin@123
