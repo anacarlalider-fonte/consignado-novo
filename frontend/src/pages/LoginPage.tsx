@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AUTH_ENABLED } from "../config/auth-flags";
 import { useAuth } from "../state/auth-context";
 import { useToast } from "../state/toast-context";
 
@@ -8,9 +9,10 @@ const SELLERS_KEY = "crm-kato-sellers-v1";
 const GOALS_KEY = "crm-kato-goals-v1";
 
 export function LoginPage() {
-  const { loginAsSeller, loginLocal } = useAuth();
+  const { login, loginAsSeller, loginLocal } = useAuth();
   const { pushToast } = useToast();
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
   const [nome, setNome] = useState("");
   const [senha, setSenha] = useState("");
   const [error, setError] = useState("");
@@ -23,7 +25,11 @@ export function LoginPage() {
     for (const key of [DATA_KEY, SELLERS_KEY, GOALS_KEY]) {
       const raw = localStorage.getItem(key);
       if (raw) {
-        try { data[key] = JSON.parse(raw); } catch { data[key] = raw; }
+        try {
+          data[key] = JSON.parse(raw);
+        } catch {
+          data[key] = raw;
+        }
       }
     }
     if (Object.keys(data).length === 0) {
@@ -65,7 +71,32 @@ export function LoginPage() {
     reader.readAsText(file);
   }
 
-  function handleLogin() {
+  async function handleApiLogin(e: React.FormEvent) {
+    e.preventDefault();
+    setError("");
+    const em = email.trim();
+    if (!em) {
+      setError("Informe seu e-mail.");
+      return;
+    }
+    if (!senha) {
+      setError("Informe sua senha.");
+      return;
+    }
+    setLoading(true);
+    try {
+      await login(em, senha);
+      pushToast("success", "Bem-vindo!");
+      navigate("/dashboard", { replace: true });
+    } catch {
+      setError("E-mail ou senha incorretos.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function handleSellerLogin(e: React.FormEvent) {
+    e.preventDefault();
     setError("");
     const trimmed = nome.trim();
     if (!trimmed) {
@@ -105,83 +136,128 @@ export function LoginPage() {
 
         <div className="login-separator" />
 
-        <form
-          className="login-form"
-          onSubmit={(e) => { e.preventDefault(); handleLogin(); }}
-        >
-          <label className="login-field">
-            <span>Nome</span>
-            <input
-              type="text"
-              value={nome}
-              onChange={(e) => setNome(e.target.value)}
-              placeholder="Digite seu nome completo"
-              autoFocus
-              autoComplete="name"
-            />
-          </label>
-
-          <label className="login-field">
-            <span>Senha</span>
-            <div className="login-field-password">
+        {AUTH_ENABLED ? (
+          <form className="login-form" onSubmit={handleApiLogin} autoComplete="on">
+            <label className="login-field">
+              <span>E-mail</span>
               <input
-                type={showSenha ? "text" : "password"}
-                value={senha}
-                onChange={(e) => setSenha(e.target.value)}
-                placeholder="Sua senha de acesso"
-                autoComplete="current-password"
+                type="email"
+                name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="seu@email.com"
+                autoComplete="email"
+                autoFocus
               />
-              <button
-                type="button"
-                className="login-eye-btn"
-                onClick={() => setShowSenha((v) => !v)}
-                tabIndex={-1}
-                aria-label={showSenha ? "Ocultar senha" : "Mostrar senha"}
-              >
-                {showSenha ? "🙈" : "👁"}
+            </label>
+
+            <label className="login-field">
+              <span>Senha</span>
+              <div className="login-field-password">
+                <input
+                  type={showSenha ? "text" : "password"}
+                  name="password"
+                  value={senha}
+                  onChange={(e) => setSenha(e.target.value)}
+                  placeholder="Sua senha"
+                  autoComplete="current-password"
+                />
+                <button
+                  type="button"
+                  className="login-eye-btn"
+                  onClick={() => setShowSenha((v) => !v)}
+                  tabIndex={-1}
+                  aria-label={showSenha ? "Ocultar senha" : "Mostrar senha"}
+                >
+                  {showSenha ? "🙈" : "👁"}
+                </button>
+              </div>
+            </label>
+
+            {error && <p className="login-error">{error}</p>}
+
+            <button type="submit" className="login-submit" disabled={loading}>
+              {loading ? "Entrando..." : "Acessar"}
+            </button>
+          </form>
+        ) : (
+          <>
+            <form className="login-form" onSubmit={handleSellerLogin}>
+              <label className="login-field">
+                <span>Nome</span>
+                <input
+                  type="text"
+                  value={nome}
+                  onChange={(e) => setNome(e.target.value)}
+                  placeholder="Digite seu nome completo"
+                  autoFocus
+                  autoComplete="name"
+                />
+              </label>
+
+              <label className="login-field">
+                <span>Senha</span>
+                <div className="login-field-password">
+                  <input
+                    type={showSenha ? "text" : "password"}
+                    value={senha}
+                    onChange={(e) => setSenha(e.target.value)}
+                    placeholder="Sua senha de acesso"
+                    autoComplete="current-password"
+                  />
+                  <button
+                    type="button"
+                    className="login-eye-btn"
+                    onClick={() => setShowSenha((v) => !v)}
+                    tabIndex={-1}
+                    aria-label={showSenha ? "Ocultar senha" : "Mostrar senha"}
+                  >
+                    {showSenha ? "🙈" : "👁"}
+                  </button>
+                </div>
+              </label>
+
+              {error && <p className="login-error">{error}</p>}
+
+              <button type="submit" className="login-submit" disabled={loading}>
+                {loading ? "Entrando..." : "Acessar"}
               </button>
+            </form>
+
+            <div className="login-footer-divider">
+              <span>ou</span>
             </div>
-          </label>
 
-          {error && <p className="login-error">{error}</p>}
+            <button
+              type="button"
+              className="login-admin-link"
+              onClick={handleLocalEntry}
+              disabled={loading}
+            >
+              Entrar como Administradora
+            </button>
 
-          <button type="submit" className="login-submit" disabled={loading}>
-            {loading ? "Entrando..." : "Acessar"}
-          </button>
-        </form>
-
-        <div className="login-footer-divider">
-          <span>ou</span>
-        </div>
-
-        <button
-          type="button"
-          className="login-admin-link"
-          onClick={handleLocalEntry}
-          disabled={loading}
-        >
-          Entrar como Administradora
-        </button>
-
-        <div className="login-backup-section">
-          <button type="button" className="login-backup-btn" onClick={handleExportBackup}>
-            Exportar Backup
-          </button>
-          <button type="button" className="login-backup-btn" onClick={() => fileRef.current?.click()}>
-            Importar Backup
-          </button>
-          <input
-            ref={fileRef}
-            type="file"
-            accept=".json"
-            style={{ display: "none" }}
-            onChange={(e) => {
-              const f = e.target.files?.[0];
-              if (f) handleImportBackup(f);
-              e.target.value = "";
-            }}
-          />
-        </div>
+            <div className="login-backup-section">
+              <button type="button" className="login-backup-btn" onClick={handleExportBackup}>
+                Exportar Backup
+              </button>
+              <button type="button" className="login-backup-btn" onClick={() => fileRef.current?.click()}>
+                Importar Backup
+              </button>
+              <input
+                ref={fileRef}
+                type="file"
+                accept=".json"
+                style={{ display: "none" }}
+                onChange={(e) => {
+                  const f = e.target.files?.[0];
+                  if (f) handleImportBackup(f);
+                  e.target.value = "";
+                }}
+              />
+            </div>
+          </>
+        )}
       </section>
     </div>
   );

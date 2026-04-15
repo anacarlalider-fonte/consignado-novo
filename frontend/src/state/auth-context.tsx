@@ -141,7 +141,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setAccessToken(data.accessToken);
       logEvent(crmUser.name, "LOGIN", `Login realizado por ${crmUser.email}`);
     } catch {
-      if (email.toLowerCase() === "admin@kato.com" && password === "Admin@123") {
+      /* Modo local (sem VITE_AUTH_ENABLED): permite admin fixo só quando a API não existe. */
+      if (
+        !AUTH_ENABLED &&
+        email.toLowerCase() === "admin@kato.com" &&
+        password === "Admin@123"
+      ) {
         const offlineUser: CrmUser = {
           id: "offline-admin",
           name: "Admin Local",
